@@ -1,0 +1,28 @@
+{
+  "created_at": "2026-03-02T11:03:33Z",
+  "run_dir": "/data2/chojm/incoh-pilot/runs/round8c_mmlu_repro_r3_v1",
+  "dataset_n": 200,
+  "shard_total": 8,
+  "methods": [
+    "hard_cap",
+    "hard_cap_matched",
+    "ours_controller_v2_nofallback",
+    "probe_only_fixedk_k4"
+  ],
+  "trial_seeds": [
+    11,
+    22,
+    33
+  ],
+  "budgets": [
+    400,
+    900,
+    1500
+  ],
+  "budget_metric": "total_tokens",
+  "parse_policy": "P1R",
+  "enforce_strict_repair_reserve": true,
+  "repair_min_remaining_tokens": 64,
+  "expected_total_global": 7200,
+  "expected_total_per_shard_estimate": 900
+}

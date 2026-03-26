@@ -1,0 +1,67 @@
+experiment:
+  name: gpqa_incoh_round3_core3
+  run_id: null
+  output_root: runs
+
+runtime:
+  dtype: bfloat16
+  use_fast_tokenizer: false
+  trust_remote_code: true
+  max_retries: 2
+
+models:
+  main: Qwen/Qwen3-14B
+  anchor: Qwen/Qwen3-1.7B
+
+dataset:
+  name: Wanfq/gpqa
+  config: gpqa_diamond
+  split: train
+  n_questions: 198
+  sample_seed: 20260226
+
+evaluation:
+  trial_seeds: [11, 22, 33, 44, 55]
+  total_token_budgets: [768, 1024, 1536, 2048, 2560]
+  compare_to: baseline_longcot
+  parse_policy: P1
+  success:
+    incoherence_reduction_min_rel: 0.10
+    incoherence_reduction_min_abs: 0.00
+    require_no_sig_accuracy_drop: true
+
+methods:
+  - baseline_longcot
+  - hard_cap
+  - ours_controller_v2
+
+method_params:
+  baseline_longcot:
+    max_new_tokens: 768
+    temperature: 0.6
+    top_p: 0.95
+
+  hard_cap:
+    max_new_tokens: 96
+    temperature: 0.6
+    top_p: 0.95
+
+  ours_controller_v2:
+    n_probe: 4
+    n_probe_first: 2
+    n_probe_second: 2
+    probe_max_new_tokens: 64
+    probe_budget_ratio: 0.15
+    probe_budget_cap: 128
+    min_probe_budget_tokens: 64
+    solve_min_ratio: 0.60
+    solve_min_floor: 256
+    low_budget_threshold: 1024
+    enable_low_budget_fallback: true
+    fallback_hard_cap_tokens: 96
+    solve_max_new_tokens: 320
+    restart_max_new_tokens: 192
+    stop_conf_threshold: 0.67
+    max_restart: 1
+    temperature: 0.6
+    top_p: 0.95

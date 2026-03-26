@@ -1,0 +1,133 @@
+experiment:
+  name: gpqa_incoh_round9b_heldout_splitB9
+  run_id: null
+  output_root: runs
+runtime:
+  dtype: bfloat16
+  use_fast_tokenizer: false
+  trust_remote_code: true
+  max_retries: 2
+models:
+  main: Qwen/Qwen3-14B
+  anchor: Qwen/Qwen3-1.7B
+dataset:
+  name: Wanfq/gpqa
+  config: gpqa_main
+  split: train
+  format: gpqa
+  n_questions: 600
+  sample_seed: 20260430
+  subset_start: 300
+  subset_end: 600
+evaluation:
+  trial_seeds:
+  - 11
+  - 22
+  - 33
+  - 44
+  - 55
+  total_token_budgets:
+  - 300
+  - 350
+  - 400
+  - 450
+  - 500
+  - 600
+  - 900
+  - 1500
+  compare_to: hard_cap
+  parse_policy: P1R
+  enable_parse_repair: true
+  repair_min_remaining_tokens: 64
+  enforce_strict_repair_reserve: true
+  repair_max_new_tokens: 12
+  repair_temperature: 0.0
+  repair_top_p: 1.0
+  success:
+    incoherence_reduction_min_rel: 0.05
+    incoherence_reduction_min_abs: 0.0
+    require_no_sig_accuracy_drop: true
+methods:
+- hard_cap
+- hard_cap_matched
+- probe_only_fixedk_k2
+- probe_only_fixedk_k4
+- probe_only_fixedk_k8
+- probe_adaptive_k_selected
+- budgeted_self_consistency
+- ours_controller_v3_nofallback
+method_params:
+  hard_cap:
+    max_new_tokens: 80
+    temperature: 0.6
+    top_p: 0.95
+  hard_cap_matched:
+    max_new_tokens: 80
+    max_new_tokens_by_budget:
+      '300': 91
+      '350': 93
+      '400': 101
+      '450': 131
+      '500': 164
+      '600': 237
+      '900': 301
+      '1500': 377
+    temperature: 0.6
+    top_p: 0.95
+  probe_only_fixedk_k2:
+    n_probe: 2
+    per_probe_max_new_tokens: 64
+    fallback_max_new_tokens: 48
+    temperature: 0.6
+    top_p: 0.95
+  probe_only_fixedk_k4:
+    n_probe: 4
+    per_probe_max_new_tokens: 64
+    fallback_max_new_tokens: 48
+    temperature: 0.6
+    top_p: 0.95
+  probe_only_fixedk_k8:
+    n_probe: 8
+    per_probe_max_new_tokens: 64
+    fallback_max_new_tokens: 48
+    temperature: 0.6
+    top_p: 0.95
+  probe_adaptive_k_selected:
+    initial_k: 2
+    step_k: 2
+    k_max: 14
+    agreement_threshold: 0.67
+    per_probe_max_new_tokens: 64
+    fallback_max_new_tokens: 48
+    temperature: 0.6
+    top_p: 0.95
+  budgeted_self_consistency:
+    per_sample_max_new_tokens: 48
+    max_rounds: 48
+    early_majority_stop: true
+    early_min_votes: 4
+    early_agree_threshold: 0.85
+    fallback_max_new_tokens: 64
+    temperature: 0.6
+    top_p: 0.95
+  ours_controller_v3_nofallback:
+    n_probe: 8
+    n_probe_first: 2
+    n_probe_second: 2
+    probe_max_new_tokens: 64
+    probe_budget_ratio: 0.35
+    probe_budget_cap: 600
+    min_probe_budget_tokens: 32
+    solve_min_ratio: 0.4
+    solve_min_floor: 128
+    solve_max_new_tokens: 512
+    restart_max_new_tokens: 192
+    stop_conf_threshold: 0.75
+    low_budget_stop_forbid_threshold: 600
+    enable_stop_after_probe: true
+    max_restart: 1
+    low_budget_threshold: 0
+    enable_low_budget_fallback: false
+    fallback_hard_cap_tokens: 80
+    temperature: 0.6
+    top_p: 0.95

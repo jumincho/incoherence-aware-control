@@ -1,0 +1,58 @@
+experiment:
+  name: gpqa_incoh_round2_costmatch
+  run_id: null
+  output_root: runs
+
+runtime:
+  dtype: bfloat16
+  use_fast_tokenizer: false
+  trust_remote_code: true
+  max_retries: 2
+
+models:
+  main: Qwen/Qwen3-14B
+  anchor: Qwen/Qwen3-1.7B
+
+dataset:
+  name: Wanfq/gpqa
+  config: gpqa_diamond
+  split: train
+  n_questions: 48
+  sample_seed: 20260226
+
+evaluation:
+  trial_seeds: [11, 22]
+  total_token_budgets: [1024]
+  compare_to: baseline_longcot
+  parse_policy: P1
+  success:
+    incoherence_reduction_min_rel: 0.10
+    incoherence_reduction_min_abs: 0.00
+    require_no_sig_accuracy_drop: true
+
+methods:
+  - baseline_longcot
+  - hard_cap
+  - ours_controller
+
+method_params:
+  baseline_longcot:
+    max_new_tokens: 640
+    temperature: 0.6
+    top_p: 0.95
+
+  hard_cap:
+    max_new_tokens: 80
+    temperature: 0.6
+    top_p: 0.95
+
+  ours_controller:
+    n_probe: 1
+    min_budget_for_four_probe: 4096
+    probe_max_new_tokens: 24
+    solve_max_new_tokens: 128
+    restart_max_new_tokens: 64
+    stop_conf_threshold: 0.95
+    max_restart: 0
+    temperature: 0.6
+    top_p: 0.95

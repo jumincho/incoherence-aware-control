@@ -1,0 +1,86 @@
+[
+  {
+    "budget_total": 400,
+    "method": "hard_cap",
+    "accuracy": 0.29054054054054046,
+    "incoherence": 0.18784530386740317,
+    "avg_total_tokens": 254.6891891891892
+  },
+  {
+    "budget_total": 400,
+    "method": "hard_cap_matched",
+    "accuracy": 0.2934362934362934,
+    "incoherence": 0.1984732824427479,
+    "avg_total_tokens": 261.81756756756755
+  },
+  {
+    "budget_total": 400,
+    "method": "probe_only_fixedk_k4",
+    "accuracy": 0.4034749034749035,
+    "incoherence": 0.07759882869692533,
+    "avg_total_tokens": 251.40540540540542
+  },
+  {
+    "budget_total": 400,
+    "method": "ours_controller_v3_nofallback",
+    "accuracy": 0.25675675675675674,
+    "incoherence": 0.0,
+    "avg_total_tokens": 283.08204633204633
+  },
+  {
+    "budget_total": 500,
+    "method": "hard_cap",
+    "accuracy": 0.30984555984555984,
+    "incoherence": 0.21357063403781967,
+    "avg_total_tokens": 293.8754826254826
+  },
+  {
+    "budget_total": 500,
+    "method": "hard_cap_matched",
+    "accuracy": 0.31081081081081074,
+    "incoherence": 0.24945295404813983,
+    "avg_total_tokens": 326.38127413127415
+  },
+  {
+    "budget_total": 500,
+    "method": "probe_only_fixedk_k4",
+    "accuracy": 0.40733590733590735,
+    "incoherence": 0.074468085106383,
+    "avg_total_tokens": 329.1650579150579
+  },
+  {
+    "budget_total": 500,
+    "method": "ours_controller_v3_nofallback",
+    "accuracy": 0.2596525096525097,
+    "incoherence": 0.011553273427471115,
+    "avg_total_tokens": 364.1457528957529
+  },
+  {
+    "budget_total": 600,
+    "method": "hard_cap",
+    "accuracy": 0.30694980694980695,
+    "incoherence": 0.2004479283314668,
+    "avg_total_tokens": 305.09749034749035
+  },
+  {
+    "budget_total": 600,
+    "method": "hard_cap_matched",
+    "accuracy": 0.33301158301158307,
+    "incoherence": 0.23594266813671422,
+    "avg_total_tokens": 351.32239382239385
+  },
+  {
+    "budget_total": 600,
+    "method": "probe_only_fixedk_k4",
+    "accuracy": 0.3996138996138997,
+    "incoherence": 0.07216494845360825,
+    "avg_total_tokens": 413.6766409266409
+  },
+  {
+    "budget_total": 600,
+    "method": "ours_controller_v3_nofallback",
+    "accuracy": 0.25096525096525096,
+    "incoherence": 0.020176544766708698,
+    "avg_total_tokens": 461.7972972972973
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "selected_adaptive": "probe_adaptive_k_t67",
+  "adaptive_candidates": [
+    {
+      "method": "probe_adaptive_k_t67",
+      "mean_acc": 0.368,
+      "mean_incoh": 0.054715141119978786,
+      "mean_tok": 287.8702222222222
+    },
+    {
+      "method": "probe_adaptive_k_t75",
+      "mean_acc": 0.368,
+      "mean_incoh": 0.054715141119978786,
+      "mean_tok": 287.8702222222222
+    },
+    {
+      "method": "probe_adaptive_k_t80",
+      "mean_acc": 0.368,
+      "mean_incoh": 0.054715141119978786,
+      "mean_tok": 287.8702222222222
+    }
+  ],
+  "hard_cap_matched_map_gpqa": {
+    "300": 91,
+    "350": 93,
+    "400": 101,
+    "450": 131,
+    "500": 164,
+    "600": 237,
+    "900": 301,
+    "1500": 377
+  },
+  "hard_cap_matched_map_mmlu": {
+    "400": 101,
+    "900": 301,
+    "1500": 377
+  },
+  "hard_cap_matched_map_confirm": {
+    "400": 101,
+    "500": 164,
+    "600": 237
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "created_at": "2026-03-02T12:30:36Z",
+  "run_dir": "/data2/chojm/incoh-pilot/runs/round9a_tuning_splitA9_r3_v1",
+  "dataset_n": 300,
+  "shard_total": 8,
+  "methods": [
+    "hard_cap",
+    "probe_only_fixedk_k2",
+    "probe_only_fixedk_k4",
+    "probe_only_fixedk_k8",
+    "probe_adaptive_k_t67",
+    "probe_adaptive_k_t75",
+    "probe_adaptive_k_t80",
+    "budgeted_self_consistency",
+    "ours_controller_v3_nofallback"
+  ],
+  "trial_seeds": [
+    11,
+    22,
+    33
+  ],
+  "budgets": [
+    300,
+    350,
+    400,
+    450,
+    500,
+    600,
+    900,
+    1500
+  ],
+  "budget_metric": "total_tokens",
+  "parse_policy": "P1R",
+  "enforce_strict_repair_reserve": true,
+  "repair_min_remaining_tokens": 64,
+  "expected_total_global": 64800,
+  "expected_total_per_shard_estimate": 8208
+}

@@ -1,0 +1,110 @@
+experiment:
+  name: gpqa_incoh_round2
+  run_id: null
+  output_root: runs
+
+runtime:
+  dtype: bfloat16
+  use_fast_tokenizer: false
+  trust_remote_code: true
+  max_retries: 2
+
+models:
+  main: Qwen/Qwen3-14B
+  anchor: Qwen/Qwen3-1.7B
+
+dataset:
+  name: Wanfq/gpqa
+  config: gpqa_diamond
+  split: train
+  n_questions: 128
+  sample_seed: 20260226
+
+evaluation:
+  trial_seeds: [11, 22, 33]
+  total_token_budgets: [1024, 1536, 2048, 2560]
+  compare_to: baseline_longcot
+  parse_policy: P1
+  success:
+    incoherence_reduction_min_rel: 0.10
+    incoherence_reduction_min_abs: 0.00
+    require_no_sig_accuracy_drop: true
+
+methods:
+  - baseline_longcot
+  - hard_cap
+  - self_consistency
+  - confidence_select
+  - ours_controller
+  - ours_full
+  - ours_decompose_only
+  - ours_anchor_only
+
+method_params:
+  baseline_longcot:
+    max_new_tokens: 640
+    temperature: 0.6
+    top_p: 0.95
+
+  hard_cap:
+    max_new_tokens: 80
+    temperature: 0.6
+    top_p: 0.95
+
+  self_consistency:
+    n_samples: 3
+    per_sample_max_new_tokens: 96
+    temperature: 0.7
+    top_p: 0.95
+
+  confidence_select:
+    n_samples: 3
+    per_sample_max_new_tokens: 96
+    temperature: 0.7
+    top_p: 0.95
+
+  ours_controller:
+    n_probe: 4
+    min_budget_for_four_probe: 1536
+    probe_max_new_tokens: 64
+    solve_max_new_tokens: 256
+    restart_max_new_tokens: 160
+    stop_conf_threshold: 0.67
+    max_restart: 1
+    temperature: 0.6
+    top_p: 0.95
+
+  ours_full:
+    min_budget_for_anchor: 2048
+    min_budget_for_decompose: 2560
+    anchor_stage_cap: 64
+    decompose_stage_cap: 96
+    solve_stage_cap: 384
+    verify_stage_cap: 96
+    restart_stage_cap: 128
+    hard_anchor: true
+    max_restart: 1
+    temperature: 0.6
+    top_p: 0.95
+
+  ours_decompose_only:
+    min_budget_for_decompose: 2048
+    decompose_stage_cap: 96
+    solve_stage_cap: 420
+    verify_stage_cap: 96
+    restart_stage_cap: 128
+    hard_anchor: false
+    max_restart: 1
+    temperature: 0.6
+    top_p: 0.95
+
+  ours_anchor_only:
+    min_budget_for_anchor: 2048
+    anchor_stage_cap: 64
+    solve_stage_cap: 420
+    verify_stage_cap: 96
+    restart_stage_cap: 128
+    hard_anchor: true
+    max_restart: 1
+    temperature: 0.6
+    top_p: 0.95

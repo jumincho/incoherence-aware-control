@@ -1,0 +1,23 @@
+{
+  "selected": "probe_adaptive_k_t67",
+  "rows": [
+    {
+      "method": "probe_adaptive_k_t67",
+      "mean_acc": 0.36566666666666664,
+      "mean_incoh": 0.05214772304157088,
+      "mean_parse": 0.0
+    },
+    {
+      "method": "probe_adaptive_k_t75",
+      "mean_acc": 0.36566666666666664,
+      "mean_incoh": 0.05214772304157088,
+      "mean_parse": 0.0
+    },
+    {
+      "method": "probe_adaptive_k_t80",
+      "mean_acc": 0.36566666666666664,
+      "mean_incoh": 0.05214772304157088,
+      "mean_parse": 0.0
+    }
+  ]
+}

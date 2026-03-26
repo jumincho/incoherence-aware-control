@@ -1,0 +1,450 @@
+[
+  {
+    "budget_total": 300,
+    "method": "hard_cap",
+    "accuracy": 0.27972972972972976,
+    "incoherence": 0.09863945578231291,
+    "avg_total_tokens": 142.7135135135135
+  },
+  {
+    "budget_total": 300,
+    "method": "hard_cap_matched",
+    "accuracy": 0.2837837837837838,
+    "incoherence": 0.10321489001692045,
+    "avg_total_tokens": 143.53108108108108
+  },
+  {
+    "budget_total": 300,
+    "method": "probe_only_fixedk_k2",
+    "accuracy": 0.3283783783783784,
+    "incoherence": 0.03696498054474708,
+    "avg_total_tokens": 150.12297297297297
+  },
+  {
+    "budget_total": 300,
+    "method": "probe_only_fixedk_k4",
+    "accuracy": 0.3283783783783784,
+    "incoherence": 0.03696498054474708,
+    "avg_total_tokens": 150.12297297297297
+  },
+  {
+    "budget_total": 300,
+    "method": "probe_only_fixedk_k8",
+    "accuracy": 0.3283783783783784,
+    "incoherence": 0.03696498054474708,
+    "avg_total_tokens": 150.12297297297297
+  },
+  {
+    "budget_total": 300,
+    "method": "probe_adaptive_k_selected",
+    "accuracy": 0.32972972972972975,
+    "incoherence": 0.035087719298245605,
+    "avg_total_tokens": 150.10675675675677
+  },
+  {
+    "budget_total": 300,
+    "method": "budgeted_self_consistency",
+    "accuracy": 0.33513513513513504,
+    "incoherence": 0.055876685934489405,
+    "avg_total_tokens": 140.11891891891892
+  },
+  {
+    "budget_total": 300,
+    "method": "ours_controller_v3_nofallback",
+    "accuracy": 0.25675675675675674,
+    "incoherence": 0.0,
+    "avg_total_tokens": 151.2945945945946
+  },
+  {
+    "budget_total": 350,
+    "method": "hard_cap",
+    "accuracy": 0.28243243243243255,
+    "incoherence": 0.16134185303514373,
+    "avg_total_tokens": 205.12297297297297
+  },
+  {
+    "budget_total": 350,
+    "method": "hard_cap_matched",
+    "accuracy": 0.2864864864864866,
+    "incoherence": 0.1544715447154471,
+    "avg_total_tokens": 207.5972972972973
+  },
+  {
+    "budget_total": 350,
+    "method": "probe_only_fixedk_k2",
+    "accuracy": 0.3743243243243243,
+    "incoherence": 0.06000000000000002,
+    "avg_total_tokens": 203.67027027027027
+  },
+  {
+    "budget_total": 350,
+    "method": "probe_only_fixedk_k4",
+    "accuracy": 0.3743243243243243,
+    "incoherence": 0.06000000000000002,
+    "avg_total_tokens": 203.67027027027027
+  },
+  {
+    "budget_total": 350,
+    "method": "probe_only_fixedk_k8",
+    "accuracy": 0.3743243243243243,
+    "incoherence": 0.06000000000000002,
+    "avg_total_tokens": 203.67027027027027
+  },
+  {
+    "budget_total": 350,
+    "method": "probe_adaptive_k_selected",
+    "accuracy": 0.3743243243243243,
+    "incoherence": 0.06187624750499004,
+    "avg_total_tokens": 203.67027027027027
+  },
+  {
+    "budget_total": 350,
+    "method": "budgeted_self_consistency",
+    "accuracy": 0.34189189189189195,
+    "incoherence": 0.102803738317757,
+    "avg_total_tokens": 204.10405405405405
+  },
+  {
+    "budget_total": 350,
+    "method": "ours_controller_v3_nofallback",
+    "accuracy": 0.25675675675675674,
+    "incoherence": 0.0,
+    "avg_total_tokens": 225.37567567567567
+  },
+  {
+    "budget_total": 400,
+    "method": "hard_cap",
+    "accuracy": 0.2891891891891891,
+    "incoherence": 0.17829457364341067,
+    "avg_total_tokens": 254.57162162162163
+  },
+  {
+    "budget_total": 400,
+    "method": "hard_cap_matched",
+    "accuracy": 0.2905405405405405,
+    "incoherence": 0.18478260869565202,
+    "avg_total_tokens": 261.7256756756757
+  },
+  {
+    "budget_total": 400,
+    "method": "probe_only_fixedk_k2",
+    "accuracy": 0.40270270270270264,
+    "incoherence": 0.06708595387840673,
+    "avg_total_tokens": 250.51486486486488
+  },
+  {
+    "budget_total": 400,
+    "method": "probe_only_fixedk_k4",
+    "accuracy": 0.40270270270270264,
+    "incoherence": 0.06708595387840673,
+    "avg_total_tokens": 251.20405405405404
+  },
+  {
+    "budget_total": 400,
+    "method": "probe_only_fixedk_k8",
+    "accuracy": 0.40270270270270264,
+    "incoherence": 0.06708595387840673,
+    "avg_total_tokens": 251.20405405405404
+  },
+  {
+    "budget_total": 400,
+    "method": "probe_adaptive_k_selected",
+    "accuracy": 0.40270270270270264,
+    "incoherence": 0.06708595387840673,
+    "avg_total_tokens": 250.51756756756757
+  },
+  {
+    "budget_total": 400,
+    "method": "budgeted_self_consistency",
+    "accuracy": 0.35000000000000003,
+    "incoherence": 0.12389380530973451,
+    "avg_total_tokens": 253.69054054054055
+  },
+  {
+    "budget_total": 400,
+    "method": "ours_controller_v3_nofallback",
+    "accuracy": 0.25675675675675674,
+    "incoherence": 0.0,
+    "avg_total_tokens": 283.02702702702703
+  },
+  {
+    "budget_total": 450,
+    "method": "hard_cap",
+    "accuracy": 0.30540540540540534,
+    "incoherence": 0.18622848200312972,
+    "avg_total_tokens": 280.9972972972973
+  },
+  {
+    "budget_total": 450,
+    "method": "hard_cap_matched",
+    "accuracy": 0.3054054054054054,
+    "incoherence": 0.22169811320754695,
+    "avg_total_tokens": 300.57567567567565
+  },
+  {
+    "budget_total": 450,
+    "method": "probe_only_fixedk_k2",
+    "accuracy": 0.3959459459459459,
+    "incoherence": 0.08548707753479128,
+    "avg_total_tokens": 289.1716216216216
+  },
+  {
+    "budget_total": 450,
+    "method": "probe_only_fixedk_k4",
+    "accuracy": 0.3959459459459459,
+    "incoherence": 0.08548707753479128,
+    "avg_total_tokens": 290.63243243243244
+  },
+  {
+    "budget_total": 450,
+    "method": "probe_only_fixedk_k8",
+    "accuracy": 0.3959459459459459,
+    "incoherence": 0.08548707753479128,
+    "avg_total_tokens": 290.63243243243244
+  },
+  {
+    "budget_total": 450,
+    "method": "probe_adaptive_k_selected",
+    "accuracy": 0.3959459459459459,
+    "incoherence": 0.08548707753479128,
+    "avg_total_tokens": 289.1716216216216
+  },
+  {
+    "budget_total": 450,
+    "method": "budgeted_self_consistency",
+    "accuracy": 0.34324324324324323,
+    "incoherence": 0.10839160839160839,
+    "avg_total_tokens": 294.62297297297295
+  },
+  {
+    "budget_total": 450,
+    "method": "ours_controller_v3_nofallback",
+    "accuracy": 0.25675675675675674,
+    "incoherence": 0.0,
+    "avg_total_tokens": 324.8324324324324
+  },
+  {
+    "budget_total": 500,
+    "method": "hard_cap",
+    "accuracy": 0.3202702702702703,
+    "incoherence": 0.20926517571884973,
+    "avg_total_tokens": 294.1472972972973
+  },
+  {
+    "budget_total": 500,
+    "method": "hard_cap_matched",
+    "accuracy": 0.32162162162162156,
+    "incoherence": 0.23444976076555007,
+    "avg_total_tokens": 326.5567567567568
+  },
+  {
+    "budget_total": 500,
+    "method": "probe_only_fixedk_k2",
+    "accuracy": 0.40675675675675677,
+    "incoherence": 0.07051282051282053,
+    "avg_total_tokens": 326.44054054054055
+  },
+  {
+    "budget_total": 500,
+    "method": "probe_only_fixedk_k4",
+    "accuracy": 0.40675675675675677,
+    "incoherence": 0.06652360515021462,
+    "avg_total_tokens": 329.45675675675676
+  },
+  {
+    "budget_total": 500,
+    "method": "probe_only_fixedk_k8",
+    "accuracy": 0.40675675675675677,
+    "incoherence": 0.06652360515021462,
+    "avg_total_tokens": 329.45675675675676
+  },
+  {
+    "budget_total": 500,
+    "method": "probe_adaptive_k_selected",
+    "accuracy": 0.40810810810810816,
+    "incoherence": 0.06852248394004284,
+    "avg_total_tokens": 326.81756756756755
+  },
+  {
+    "budget_total": 500,
+    "method": "budgeted_self_consistency",
+    "accuracy": 0.3148648648648648,
+    "incoherence": 0.11663807890222985,
+    "avg_total_tokens": 327.1689189189189
+  },
+  {
+    "budget_total": 500,
+    "method": "ours_controller_v3_nofallback",
+    "accuracy": 0.2594594594594595,
+    "incoherence": 0.012567324955116695,
+    "avg_total_tokens": 363.95540540540543
+  },
+  {
+    "budget_total": 600,
+    "method": "hard_cap",
+    "accuracy": 0.2972972972972973,
+    "incoherence": 0.18641390205371236,
+    "avg_total_tokens": 305.01756756756754
+  },
+  {
+    "budget_total": 600,
+    "method": "hard_cap_matched",
+    "accuracy": 0.3351351351351353,
+    "incoherence": 0.22169811320754695,
+    "avg_total_tokens": 350.97297297297297
+  },
+  {
+    "budget_total": 600,
+    "method": "probe_only_fixedk_k2",
+    "accuracy": 0.3986486486486487,
+    "incoherence": 0.07051282051282053,
+    "avg_total_tokens": 398.09054054054053
+  },
+  {
+    "budget_total": 600,
+    "method": "probe_only_fixedk_k4",
+    "accuracy": 0.3986486486486487,
+    "incoherence": 0.06852248394004283,
+    "avg_total_tokens": 413.8081081081081
+  },
+  {
+    "budget_total": 600,
+    "method": "probe_only_fixedk_k8",
+    "accuracy": 0.3986486486486487,
+    "incoherence": 0.06852248394004283,
+    "avg_total_tokens": 413.8081081081081
+  },
+  {
+    "budget_total": 600,
+    "method": "probe_adaptive_k_selected",
+    "accuracy": 0.3986486486486487,
+    "incoherence": 0.06852248394004283,
+    "avg_total_tokens": 398.68243243243245
+  },
+  {
+    "budget_total": 600,
+    "method": "budgeted_self_consistency",
+    "accuracy": 0.33378378378378376,
+    "incoherence": 0.1364421416234887,
+    "avg_total_tokens": 416.9608108108108
+  },
+  {
+    "budget_total": 600,
+    "method": "ours_controller_v3_nofallback",
+    "accuracy": 0.25,
+    "incoherence": 0.017543859649122806,
+    "avg_total_tokens": 461.5391891891892
+  },
+  {
+    "budget_total": 900,
+    "method": "hard_cap",
+    "accuracy": 0.29054054054054057,
+    "incoherence": 0.19152276295133427,
+    "avg_total_tokens": 313.3027027027027
+  },
+  {
+    "budget_total": 900,
+    "method": "hard_cap_matched",
+    "accuracy": 0.318918918918919,
+    "incoherence": 0.24332344213649837,
+    "avg_total_tokens": 368.32567567567565
+  },
+  {
+    "budget_total": 900,
+    "method": "probe_only_fixedk_k2",
+    "accuracy": 0.41081081081081083,
+    "incoherence": 0.06113537117903931,
+    "avg_total_tokens": 539.2175675675676
+  },
+  {
+    "budget_total": 900,
+    "method": "probe_only_fixedk_k4",
+    "accuracy": 0.40135135135135125,
+    "incoherence": 0.04661016949152542,
+    "avg_total_tokens": 707.0391891891892
+  },
+  {
+    "budget_total": 900,
+    "method": "probe_only_fixedk_k8",
+    "accuracy": 0.40135135135135125,
+    "incoherence": 0.04661016949152542,
+    "avg_total_tokens": 717.6851351351352
+  },
+  {
+    "budget_total": 900,
+    "method": "probe_adaptive_k_selected",
+    "accuracy": 0.40135135135135125,
+    "incoherence": 0.04661016949152542,
+    "avg_total_tokens": 558.4635135135135
+  },
+  {
+    "budget_total": 900,
+    "method": "budgeted_self_consistency",
+    "accuracy": 0.34324324324324323,
+    "incoherence": 0.1176470588235294,
+    "avg_total_tokens": 714.3445945945946
+  },
+  {
+    "budget_total": 900,
+    "method": "ours_controller_v3_nofallback",
+    "accuracy": 0.38918918918918927,
+    "incoherence": 0.05063291139240506,
+    "avg_total_tokens": 527.7554054054054
+  },
+  {
+    "budget_total": 1500,
+    "method": "hard_cap",
+    "accuracy": 0.2945945945945946,
+    "incoherence": 0.19811320754716966,
+    "avg_total_tokens": 320.0743243243243
+  },
+  {
+    "budget_total": 1500,
+    "method": "hard_cap_matched",
+    "accuracy": 0.30270270270270266,
+    "incoherence": 0.2463768115942028,
+    "avg_total_tokens": 374.3540540540541
+  },
+  {
+    "budget_total": 1500,
+    "method": "probe_only_fixedk_k2",
+    "accuracy": 0.4135135135135135,
+    "incoherence": 0.06779661016949155,
+    "avg_total_tokens": 576.6675675675675
+  },
+  {
+    "budget_total": 1500,
+    "method": "probe_only_fixedk_k4",
+    "accuracy": 0.4094594594594595,
+    "incoherence": 0.055793991416309016,
+    "avg_total_tokens": 1072.1
+  },
+  {
+    "budget_total": 1500,
+    "method": "probe_only_fixedk_k8",
+    "accuracy": 0.4081081081081081,
+    "incoherence": 0.05228758169934641,
+    "avg_total_tokens": 1312.8648648648648
+  },
+  {
+    "budget_total": 1500,
+    "method": "probe_adaptive_k_selected",
+    "accuracy": 0.40540540540540543,
+    "incoherence": 0.05172413793103448,
+    "avg_total_tokens": 626.3148648648648
+  },
+  {
+    "budget_total": 1500,
+    "method": "budgeted_self_consistency",
+    "accuracy": 0.3459459459459459,
+    "incoherence": 0.12234042553191488,
+    "avg_total_tokens": 1140.7364864864865
+  },
+  {
+    "budget_total": 1500,
+    "method": "ours_controller_v3_nofallback",
+    "accuracy": 0.40270270270270264,
+    "incoherence": 0.043010752688172046,
+    "avg_total_tokens": 588.172972972973
+  }
+]

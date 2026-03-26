@@ -1,0 +1,87 @@
+experiment:
+  name: mmlu_incoh_round8c_repro
+  run_id: null
+  output_root: runs
+runtime:
+  dtype: bfloat16
+  use_fast_tokenizer: false
+  trust_remote_code: true
+  max_retries: 2
+models:
+  main: Qwen/Qwen3-14B
+  anchor: Qwen/Qwen3-1.7B
+dataset:
+  name: cais/mmlu
+  config: all
+  split: test
+  format: mmlu
+  question_field: question
+  choices_field: choices
+  answer_field: answer
+  doc_id_prefix: mmlu_all
+  n_questions: 200
+  sample_seed: 20260422
+evaluation:
+  trial_seeds:
+  - 11
+  - 22
+  - 33
+  total_token_budgets:
+  - 400
+  - 900
+  - 1500
+  compare_to: hard_cap
+  parse_policy: P1R
+  enable_parse_repair: true
+  repair_min_remaining_tokens: 64
+  enforce_strict_repair_reserve: true
+  repair_max_new_tokens: 12
+  repair_temperature: 0.0
+  repair_top_p: 1.0
+  success:
+    incoherence_reduction_min_rel: 0.05
+    incoherence_reduction_min_abs: 0.0
+    require_no_sig_accuracy_drop: true
+methods:
+- hard_cap
+- hard_cap_matched
+- ours_controller_v2_nofallback
+- probe_only_fixedk_k4
+method_params:
+  hard_cap:
+    max_new_tokens: 80
+    temperature: 0.6
+    top_p: 0.95
+  hard_cap_matched:
+    max_new_tokens: 80
+    max_new_tokens_by_budget:
+      '400': 80
+      '900': 285
+      '1500': 356
+    temperature: 0.6
+    top_p: 0.95
+  ours_controller_v2_nofallback:
+    n_probe: 4
+    n_probe_first: 2
+    n_probe_second: 2
+    probe_max_new_tokens: 48
+    probe_budget_ratio: 0.12
+    probe_budget_cap: 96
+    min_probe_budget_tokens: 48
+    solve_min_ratio: 0.6
+    solve_min_floor: 180
+    low_budget_threshold: 0
+    enable_low_budget_fallback: false
+    fallback_hard_cap_tokens: 80
+    solve_max_new_tokens: 220
+    restart_max_new_tokens: 120
+    stop_conf_threshold: 0.67
+    max_restart: 1
+    temperature: 0.6
+    top_p: 0.95
+  probe_only_fixedk_k4:
+    n_probe: 4
+    per_probe_max_new_tokens: 48
+    fallback_max_new_tokens: 48
+    temperature: 0.6
+    top_p: 0.95
