@@ -1,4 +1,18 @@
+<div align="center">
+
 # incoherence-aware-control
+
+**불안정성을 보고 test-time compute를 더 똑똑하게 배분할 수 있는가**
+**Can we steer test-time compute using answer-incoherence as a signal?**
+
+![Status](https://img.shields.io/badge/status-dormant-lightgrey)
+![Language](https://img.shields.io/badge/language-Python-3776AB?logo=python&logoColor=white)
+![License](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey)
+![Closure](https://img.shields.io/badge/closure-2026--03-blue)
+
+**한국어** · [English](#english)
+
+</div>
 
 > 🧊 **휴면(dormant) 중인 연구 파일럿입니다.**
 
@@ -76,3 +90,90 @@ export HF_TOKEN=...   # 필요한 경우에만
 ## 상태
 
 🧊 **휴면 중** — 능동 개발은 멈췄지만 살리려면 살릴 수 있는 상태입니다.
+
+---
+
+<a name="english"></a>
+
+## English
+
+> 🧊 **Dormant research pilot.**
+
+### What this set out to test
+
+On multiple-choice reasoning benchmarks (e.g., GPQA, MMLU), at a fixed test-time compute budget, can a controller allocate that budget more cleverly than uniform allocation?
+
+The core idea was simple:
+
+- Have the model solve each question several times.
+- Measure how much the answer wavers across attempts — call this **incoherence**.
+- Use that incoherence signal to spend more compute on the more uncertain-looking questions.
+
+The starting hypothesis: doing so could improve accuracy **and** answer stability under the same total budget.
+
+### What it found
+
+Conclusions narrowed across rounds. The most honest summary that stayed standing:
+
+- **The controller does have an effect.** At sufficiently large budgets, both accuracy and stability improved over uniform-allocation baselines.
+- **But the effect depends on the budget.** At smaller budgets, stability improved while accuracy could drop. So: "wins under the right conditions," not "always wins."
+- **The strongest simple baseline was not cleanly beaten.** Plain repeat-and-aggregate ("ask N times, vote") was surprisingly strong; isolating the controller's unique contribution didn't fully resolve.
+
+Full numbers:
+
+- 🇰🇷 [`closure_reports/project_closure_report_ko_20260327.md`](closure_reports/project_closure_report_ko_20260327.md)
+- 🇬🇧 [`closure_reports/project_closure_report_20260327.md`](closure_reports/project_closure_report_20260327.md)
+
+### Why it's on hold
+
+The original ambition ("this controller is always better") narrowed to "better under the right conditions." That narrower result has standalone value, but pushing further now is less natural than parking it and waiting for a fresh angle (different dataset, different controller family, sharper baseline decomposition).
+
+### Where to look first when revisiting
+
+- [`docs/HANDOVER_MASTER.md`](docs/HANDOVER_MASTER.md) — whole-project handover.
+- [`docs/EXPERIMENT_TIMELINE.md`](docs/EXPERIMENT_TIMELINE.md) — per-round changes.
+- [`docs/ARTIFACT_INDEX.md`](docs/ARTIFACT_INDEX.md) — what artifact lives where.
+- [`docs/REPRODUCTION_GUIDE.md`](docs/REPRODUCTION_GUIDE.md) — how to re-run.
+- [`docs/NEXT_STEPS_CHECKLIST.md`](docs/NEXT_STEPS_CHECKLIST.md) — candidate next moves.
+
+### Code map
+
+| File | What it does |
+|---|---|
+| [`src/run_pilot.py`](src/run_pilot.py) | Main experiment runner |
+| [`src/methods.py`](src/methods.py) | Baselines and the project's controller implementation |
+| [`src/parser.py`](src/parser.py) | Extracts the answer choice from raw model output |
+| [`src/token_meter.py`](src/token_meter.py) | Per-question token accounting on a consistent basis |
+| [`src/analyze_hotmess_style.py`](src/analyze_hotmess_style.py) | Diagnostic metrics including incoherence |
+| [`src/report_spend_sweep.py`](src/report_spend_sweep.py) | Cross-budget comparison tables and reports |
+
+### Folder map
+
+```
+.
+├── src/                experiment code
+├── configs/            per-round experiment configs
+├── scripts/            pipeline runners
+├── tests/              regression / smoke tests
+├── reports/            per-round reports and pre-registration documents
+├── docs/               handover documents
+├── selected_runs/      summaries of the key runs per round
+└── closure_reports/    closure reports (KO / EN)
+```
+
+### Environment
+
+```bash
+python3 -m venv --system-site-packages .venv
+source .venv/bin/activate
+pip install -U -r requirements.txt
+export HF_TOKEN=...   # only if needed
+```
+
+### Status
+
+🧊 **Dormant** — active development stopped; revivable if the next angle calls for it.
+
+### License
+
+Released under [CC BY-NC 4.0](./LICENSE).
