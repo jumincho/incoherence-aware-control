@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cd /data2/chojm/incoh-pilot
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
 . .venv/bin/activate
 
 RUN9A="round9a_tuning_splitA9_r3_v1"
@@ -257,11 +259,11 @@ for name in [
     'reports/round9_code_lock_manifest.sha256',
     'reports/round9_preregistration.md',
 ]:
-    lines.append(f'- `/data2/chojm/incoh-pilot/{name}`')
+    lines.append(f'- `{name}`')
 
 Path('reports/round9_final_experiment_report.md').write_text('\n'.join(lines)+'\n')
 Path('reports/round9_integrated_followup_report.md').write_text('\n'.join(lines)+'\n')
-print('/data2/chojm/incoh-pilot/reports/round9_final_experiment_report.md')
+print('reports/round9_final_experiment_report.md')
 PY
 
 echo "ROUND9_PIPELINE_DONE"

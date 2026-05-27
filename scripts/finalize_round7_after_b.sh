@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
-cd /data2/chojm/incoh-pilot
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
 . .venv/bin/activate
 RUN7A='round7a_tuning_splitA2_r3_v1'
 RUN7B='round7b_heldout_splitB2_r5_v1'
@@ -53,11 +55,11 @@ for bd in budgets:
     lines.append(f"| {bd} | {m} | {s['accuracy']:.4f} | {s['incoherence']:.4f} | {s['avg_total_tokens']:.1f} | {s['parse_fail_rate']:.4f} |")
 lines.append('')
 lines.append('## Artifacts')
-lines.append(f"- A report: `/data2/chojm/incoh-pilot/reports/{ra}_detailed_report.md`")
-lines.append(f"- B report: `/data2/chojm/incoh-pilot/reports/{rb}_detailed_report.md`")
-lines.append('- Code lock: `/data2/chojm/incoh-pilot/reports/round7_code_lock_manifest.sha256`')
+lines.append(f"- A report: `reports/{ra}_detailed_report.md`")
+lines.append(f"- B report: `reports/{rb}_detailed_report.md`")
+lines.append('- Code lock: `reports/round7_code_lock_manifest.sha256`')
 Path('reports/round7_integrated_report.md').write_text('\n'.join(lines)+'\n')
-print('/data2/chojm/incoh-pilot/reports/round7_integrated_report.md')
+print('reports/round7_integrated_report.md')
 PY
 
 echo 'ROUND7_FINALIZED'
