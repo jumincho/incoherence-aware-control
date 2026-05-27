@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cd /data2/chojm/incoh-pilot
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
 . .venv/bin/activate
 
 RUN_SMOKE="round8smoke_format_splitA3_r1_v1"
@@ -163,13 +165,13 @@ for b in bud_c:
 lines.append('')
 
 lines.append('## Artifacts')
-lines.append(f'- `/data2/chojm/incoh-pilot/reports/{run_smoke}_detailed_report.md`')
-lines.append(f'- `/data2/chojm/incoh-pilot/reports/{run_a}_detailed_report.md`')
-lines.append(f'- `/data2/chojm/incoh-pilot/reports/{run_b}_detailed_report.md`')
-lines.append(f'- `/data2/chojm/incoh-pilot/reports/{run_c}_detailed_report.md`')
-lines.append('- `/data2/chojm/incoh-pilot/reports/round8_code_lock_manifest.sha256`')
-Path('/data2/chojm/incoh-pilot/reports/round8_integrated_followup_report.md').write_text('\n'.join(lines)+'\n')
-print('/data2/chojm/incoh-pilot/reports/round8_integrated_followup_report.md')
+lines.append(f'- `reports/{run_smoke}_detailed_report.md`')
+lines.append(f'- `reports/{run_a}_detailed_report.md`')
+lines.append(f'- `reports/{run_b}_detailed_report.md`')
+lines.append(f'- `reports/{run_c}_detailed_report.md`')
+lines.append('- `reports/round8_code_lock_manifest.sha256`')
+Path('reports/round8_integrated_followup_report.md').write_text('\n'.join(lines)+'\n')
+print('reports/round8_integrated_followup_report.md')
 PY
 
 echo "ROUND8_PIPELINE_DONE"
