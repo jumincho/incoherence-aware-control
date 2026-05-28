@@ -10,7 +10,7 @@
 ![License](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey)
 ![Closure](https://img.shields.io/badge/closure-2026--03-blue)
 
-**한국어** · [English](#english)
+**한국어** · [English](#english) · [中文](./README.zh-CN.md)
 
 </div>
 
@@ -47,6 +47,7 @@
 
 ## 다시 들여다볼 때는 어디부터
 
+- 📖 [`GLOSSARY.md`](GLOSSARY.md) — 본문과 종료 보고서에 등장하는 내부 용어(`incoherence`, `spend sweep`, `hard_cap`, `ours_controller_v3_nofallback`, `T*`, splitA/B 등)를 일반어로 정리한 사전
 - [`docs/HANDOVER_MASTER.md`](docs/HANDOVER_MASTER.md) — 전체 흐름 한 번에
 - [`docs/EXPERIMENT_TIMELINE.md`](docs/EXPERIMENT_TIMELINE.md) — 라운드별 어떤 변화가 있었는지
 - [`docs/ARTIFACT_INDEX.md`](docs/ARTIFACT_INDEX.md) — 어떤 산출물이 어디에 있는지
@@ -75,7 +76,8 @@
 ├── reports/            라운드별 보고서와 사전 등록(prereg) 자료
 ├── docs/               전체 핸드오버 문서들
 ├── selected_runs/      라운드별 핵심 run 의 요약본
-└── closure_reports/    종료 보고서 (한국어 / 영문)
+├── closure_reports/    종료 보고서 (한국어 / 영문)
+└── GLOSSARY.md         내부 용어 사전
 ```
 
 ## 환경
@@ -130,6 +132,7 @@ The original ambition ("this controller is always better") narrowed to "better u
 
 ### Where to look first when revisiting
 
+- 📖 [`GLOSSARY.md`](GLOSSARY.md) — Decoder ring for the internal vocabulary that survived into source and closure reports (`incoherence`, `spend sweep`, `hard_cap`, `ours_controller_v3_nofallback`, `T*`, splitA/B, etc.).
 - [`docs/HANDOVER_MASTER.md`](docs/HANDOVER_MASTER.md) — whole-project handover.
 - [`docs/EXPERIMENT_TIMELINE.md`](docs/EXPERIMENT_TIMELINE.md) — per-round changes.
 - [`docs/ARTIFACT_INDEX.md`](docs/ARTIFACT_INDEX.md) — what artifact lives where.
@@ -158,7 +161,8 @@ The original ambition ("this controller is always better") narrowed to "better u
 ├── reports/            per-round reports and pre-registration documents
 ├── docs/               handover documents
 ├── selected_runs/      summaries of the key runs per round
-└── closure_reports/    closure reports (KO / EN)
+├── closure_reports/    closure reports (KO / EN)
+└── GLOSSARY.md         internal-vocabulary decoder ring
 ```
 
 ### Environment
