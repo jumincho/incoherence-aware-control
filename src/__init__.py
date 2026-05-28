@@ -19,5 +19,5 @@ Main entry points:
 
 Closure summary lives in `closure_reports/`; see `GLOSSARY.md` at the repo
 root for the project's internal vocabulary (`incoherence`, `spend sweep`,
-`hard_cap`, `controller_v3_nofallback`, etc.).
+`hard_cap`, `ours_controller_v3_nofallback`, etc.).
 """
