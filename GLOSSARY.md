@@ -91,7 +91,7 @@ The incoherence signal is read off the probe-stage disagreement; that decides wh
 | Term | What it refers to |
 |---|---|
 | **Round** | One protocol-frozen experimental iteration. Rounds 1–9; Round 9 is the final state of the world. Each round has a tuning sub-round (`a`), a held-out sub-round (`b`), optionally an MMLU reproduction (`c`), and sometimes a confirm-the-prior-finding sub-round (`d`). |
-| `selected_runs/round{N}{a,b,c,d}_*` | Per-round summary-only artifacts: `run_meta.json`, `config_resolved.yaml`, analysis JSON, detailed markdown report. The raw `runs/` tree (the per-shard JSONLs) is deliberately *not* included in this closure bundle — it was too large and mostly redundant once the analysis JSONs were frozen. |
+| `selected_runs/round{N}{a,b,c,d}_*` | Per-round summary-only artifacts: `run_meta.json`, `config_resolved.yaml`, analysis JSON, detailed markdown report. The raw `runs/` tree (the per-shard JSONLs) is not included in this closure bundle — it was too large and mostly redundant once the analysis JSONs were frozen. |
 | `closure_reports/project_closure_report_*_20260327.md` | The final project-wide closure summary. `_ko_` is Korean, the other is English. Same content. |
 | `reports/round{N}_*` | Per-round detailed reports and governance artifacts: experiment reports, integrated follow-ups, prereg docs, code-lock manifests. Survives by date order. |
 | `reports/round{N}_preregistration.md` | Pre-registration document — the planned methods, splits, budgets, success criteria — written **before** the held-out run. |
@@ -109,12 +109,3 @@ The incoherence signal is read off the probe-stage disagreement; that decides wh
 | [`docs/REPRODUCTION_GUIDE.md`](docs/REPRODUCTION_GUIDE.md) | How to re-run a round: env setup, Round 9 pipeline script, manual shard sequence, reproducibility rules. |
 | [`docs/NEXT_STEPS_CHECKLIST.md`](docs/NEXT_STEPS_CHECKLIST.md) | Candidate next moves if the project is revived — split by "continuing the dynamic-novelty track" vs "solidifying the regime-aware claim." Plus the mandatory hygiene checklist before any new held-out. |
 | [`docs/FILELIST.txt`](docs/FILELIST.txt) | Inventory of files in the transfer bundle. |
-
-## Why some terms still leak into source / reports
-
-The closure reports name artifacts by their on-disk paths
-(`round9b_heldout_splitB9_r5_v1`, `ours_controller_v3_nofallback`,
-`stop_after_probe`, `low_budget_stop_forbid_threshold`). Renaming those
-would silently break the cross-references between code, reports, and the
-preserved per-round JSONLs. The filenames and identifiers are preserved
-as historical record; this glossary is the bridge.
