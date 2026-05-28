@@ -1,3 +1,33 @@
+"""Answer extraction and parse-policy helpers (the project's `P1R` parser).
+
+Every method in `src.methods` ends with the model emitting raw text. This module
+turns that text into a single letter choice — `(A)`, `(B)`, `(C)`, or `(D)` —
+or a typed parse-failure reason. Downstream metric code in
+`src.analyze_hotmess_style` and `src.report_spend_sweep` then treats parse-fail
+rows separately from wrong-answer rows.
+
+The public surface used elsewhere:
+
+- `classify_parse_result(text)` : returns `(option, fail_type, info)`.
+  Resolution order, prefer explicit answer markers over free-form mentions:
+    1. a bare `A`/`B`/`C`/`D` line,
+    2. an explicit "Final Answer: X" / "Tentative Answer: X" line,
+    3. keyed phrasings ("answer", "pick", "choose", "therefore ..."),
+    4. unique parenthesised `(X)`.
+- `extract_final_option(text)`  : convenience wrapper that returns the option
+                                  or `None` on parse failure.
+- `extract_confidence(text)`    : pulls a `Confidence: <0..1>` value if present.
+- `count_flips(seq)` /
+  `summarize_answer_trace(texts)` : count how often the answer letter changed
+                                    across a sequence of attempts. This is
+                                    the per-question raw signal that feeds the
+                                    `incoherence` metric.
+
+Parse-failure types (`PARSE_FAIL_*`) are kept stable because they are written
+into the per-row JSONL records and the per-round reports compare parse-fail
+rates across method × budget cells.
+"""
+
 import re
 from typing import Dict, List, Optional, Tuple
 
