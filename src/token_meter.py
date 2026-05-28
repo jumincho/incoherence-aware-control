@@ -1,3 +1,26 @@
+"""Per-question token accounting on a consistent basis across methods.
+
+This is the project's single source of truth for "how much compute did this
+question actually consume." Every controller and baseline in `src.methods` is
+driven through the runner in `src.run_pilot`, which threads a `TokenBudget`
+through each generation call so that:
+
+- prompt + output + parse-repair + discarded + restart tokens all land in the
+  same total bookkeeping (no method can "hide" tokens in a stage that other
+  methods don't have),
+- `total_limit` is the per-question budget the experiment sweep sweeps over
+  (the "spend" axis in `report_spend_sweep`),
+- `clip_max_new_tokens(req, prompt_tokens)` is how each call respects whatever
+  budget is still left after the prompt is counted in,
+- `events` records a `TokenEvent` per generate-call with its `step` name
+  ("probe.controller.0", "solve.controller_v3", "repair.parse", etc.) so
+  `analyze_hotmess_style.controller_diagnostics` can later decompose spend
+  into probe / solve / restart shares.
+
+The `TokenBudget.to_dict()` payload is what gets serialised into the per-row
+`usage` and `stage_token_spend` JSON fields read by the reporting layer.
+"""
+
 from dataclasses import dataclass, field
 from typing import Dict, List
 

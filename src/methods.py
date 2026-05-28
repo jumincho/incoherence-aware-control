@@ -1,3 +1,51 @@
+"""All baselines, all probe-and-solve controllers, and `run_method` dispatch.
+
+This is the heart of the experiment: every method we compared at test-time
+compute lives here. `run_method(method_name, sample, params, trial_seed,
+call_main, call_anchor)` is the single entry point used by `src.run_pilot`;
+each branch wires the named method into the per-question execution.
+
+The methods, grouped roughly by family:
+
+- Static baselines (uniform allocation, no incoherence signal used):
+    `baseline_longcot`            : long chain-of-thought, one attempt.
+    `hard_cap` / `hard_cap_matched`: short strict-format attempt, capped.
+
+- "Repeat-and-aggregate" baselines (the surprisingly strong family that the
+   controller did not cleanly beat — see closure report):
+    `self_consistency`             : N independent attempts, majority vote.
+    `confidence_select`            : N attempts, pick the highest confidence.
+    `budgeted_self_consistency`    : as above, with optional early-stop on
+                                     agreement.
+    `probe_only_fixedk`            : K short probes, majority vote, no solve.
+    `probe_adaptive_k`             : grow K until agreement crosses threshold.
+
+- Controllers (the project's "ours" family — what the incoherence signal
+   actually steered):
+    `ours_controller`              : v1; probe → if disagree, do long solve.
+    `ours_controller_v2`           : v2; budget-aware probe reserve + solve.
+    `ours_controller_v3`           : v3 (latest, used in Round 9); strict
+                                     low-budget fallback + probe cap +
+                                     reserved solve floor.
+    Plus `*_nofallback` and `*_forcecontinue` / `*_stopcap` variants that
+    toggle the low-budget hard-cap fallback and the post-probe stop policy.
+
+- Structured deliberation (older line, retained for ablations):
+    `forced_deliberation`, `ours_full`, `ours_decompose_only`,
+    `ours_anchor_only` — anchor / decompose / verify multi-stage flows.
+
+Each method returns the same dict shape:
+    response_text, pred_option, intermediate_answers, restart_count,
+    anchor_constraints, controller_trace.
+
+`controller_trace` is a free-form diagnostic dict (decision name, agreement,
+fallback fired, ...) that `analyze_hotmess_style.controller_diagnostics`
+later aggregates to explain *why* a controller chose what it chose.
+
+All compute spent here is metered by `src.token_meter.TokenBudget` in the
+caller, so methods can be compared on a consistent total-tokens basis.
+"""
+
 from __future__ import annotations
 
 import hashlib

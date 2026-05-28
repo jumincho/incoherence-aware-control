@@ -1,3 +1,28 @@
+"""Live progress watcher for an active `run_pilot` run.
+
+A run produced by `src.run_pilot --gpu-shard i/N` writes per-shard JSONL
+result files (`results_shard*.jsonl`) and per-shard status snapshots
+(`status_shard*.json`) into `run_dir`. This module reads those files and
+prints a one-line summary of:
+
+- `completed / expected` across all shards, with a rolling ETA,
+- `parse_fail_rate` and the breakdown by `PARSE_FAIL_*` type,
+- average output / total tokens per row,
+- coverage by `method` and by `budget_total`,
+- per-shard `done` flag plus what (doc_id, seed, method, budget) it is
+  currently working on.
+
+Invoked two ways:
+
+- One-shot: `python -m src.monitor --run-dir <run_dir>`.
+- Watcher : add `--watch` and `--interval <seconds>` to keep printing
+            updates until the run finishes (the per-shard `done=True` flag
+            written by `run_pilot` is the source of truth for completion).
+
+Read-only: this script never writes into `run_dir` and never decides what to
+re-run; it just summarises what's already on disk.
+"""
+
 from __future__ import annotations
 
 import argparse

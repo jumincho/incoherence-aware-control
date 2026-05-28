@@ -1,3 +1,44 @@
+"""Main experiment runner — sharded across GPUs, one row per (question × seed × method × budget).
+
+This is the script that actually runs the pilot. A round is launched as N
+parallel shards (`--gpu-shard i/N`), where each shard loads the configured HF
+model, takes its slice of the question pool, and for every cell
+
+    (doc_id, trial_seed, method, total_token_budget)
+
+invokes the corresponding entry in `src.methods.run_method`. Each cell's
+compute is wrapped in a `src.token_meter.TokenBudget` so prompt + output +
+parse-repair + restart all count toward the same `budget_total`.
+
+What the runner owns:
+
+- **Question pool construction** (`build_question_pool`): loads the configured
+  HF `datasets` split (GPQA or MMLU), samples `n_questions` with `sample_seed`,
+  optionally shuffles the choice positions per question, and freezes the
+  resulting manifest to `run_dir/questions_manifest.json` so re-runs are
+  bit-identical.
+- **Sharding** (`parse_gpu_shard`): an i/N split over the manifest by
+  `manifest_index % N == i`.
+- **Per-row execution**: builds the rendered prompt, calls `runner.generate_*`,
+  passes the result through `parser.classify_parse_result`, and if the parse
+  fails *and* `enable_parse_repair` is on and the budget reserve survives,
+  spends a small `repair.parse` step trying to recover the answer.
+- **Resume safety**: existing rows are read from `results_shard{i}.jsonl` and
+  matching `(doc_id, seed, method, budget)` keys are skipped, so a crashed
+  shard can be restarted without redoing finished work.
+- **Outputs in `run_dir`**:
+    - `results_shard{i}.jsonl`  : one JSON row per cell (the primary artifact),
+    - `hotmess_shard{i}.jsonl`  : per-attempt records used by hot-mess metrics,
+    - `status_shard{i}.json`    : live status read by `src.monitor`,
+    - `questions_manifest.json` : frozen question pool,
+    - `config_resolved.yaml`    : the config the run was actually started with,
+    - `run_meta.json`           : run-wide metadata (created_at, expected total,
+                                  parse policy, budgets, methods).
+
+The fairness contract (token accounting, parse policy `P1R`, repair reserve)
+is enforced here so all downstream comparisons sit on the same basis.
+"""
+
 from __future__ import annotations
 
 import argparse

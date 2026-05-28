@@ -1,3 +1,31 @@
+"""Cross-budget ("spend sweep") comparison tables and detailed markdown reports.
+
+This is the *reporting* layer that sits on top of `analyze_hotmess_style`. It
+takes a finished `run_pilot` run — which evaluates each method at multiple
+`total_token_budgets` (the "spend" axis) — and turns the per-budget
+bias/variance/incoherence/accuracy numbers into:
+
+- the detailed per-round markdown report (e.g.,
+  `reports/round9b_heldout_splitB9_r5_v1_detailed_report.md`),
+- the per-budget method × metric tables (`accuracy`, `incoherence`,
+  `avg_total_tokens`, `parse_fail_rate`, `repair_*`),
+- paired-bootstrap deltas vs. the configured baseline at each budget, with
+  95% CIs and two-sided p-values,
+- threshold crossings — at what total-token budget does the controller
+  (`ours_controller_v3_nofallback`) first beat `hard_cap` on both accuracy
+  and incoherence, and does it beat `budgeted_self_consistency` within an
+  accuracy tolerance? Helpers `_phase_thresholds*` and
+  `_threshold_ci_bootstrap` are exactly this: the project's "*T**" estimator
+  (Round 8 ≈ 400, Round 9 ≈ 900 — protocol-dependent, see
+  `docs/HANDOVER_MASTER.md`).
+- AUC / ECE / parse-fail confound diagnostics
+  (`_auc_binary`, `_ece_binary`, `_parse_repair_stats`).
+
+The final markdown is a per-round artifact, frozen for the closure
+package; the per-budget JSON it also writes is consumed by downstream
+plotting / closure assembly.
+"""
+
 from __future__ import annotations
 
 import argparse

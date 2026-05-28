@@ -1,3 +1,51 @@
+"""Bias / variance / **incoherence** metrics, controller diagnostics, paired bootstrap.
+
+This module is where the project's headline signal — *incoherence* — is
+defined and computed. For each `(method, budget)` cell on a finished
+`run_pilot` run, it reads the per-row JSONL records, groups them by
+`doc_id`, computes the bias/variance/accuracy decomposition per question
+across trial seeds via `hot-mess-of-ai`'s `process_question_metrics`, and
+aggregates into the metric set used by all reports and the closure summary.
+
+Key definitions used downstream:
+
+- **`incoherence` (per cell)** = `sum_variance / (sum_bias + sum_variance)`,
+  computed in `compute_budget_stats`. It is the share of the
+  bias+variance error budget that comes from *variance across reseeded
+  attempts on the same question* — i.e., how unstable the model is on the
+  questions where it gets things wrong. Lower is better.
+- **`inter_disagreement` (per doc)** = `1 - (max-final-answer-count / n)`
+  across the doc's trials. A simpler per-question proxy used for
+  stratification (`stratify_disagreement`).
+- **`intra_flip_rate`** = mean count of within-attempt answer flips
+  recorded by `parser.count_flips`.
+
+Cross-method comparisons go through `paired_bootstrap_delta` (paired over
+doc_ids, 95% CI + two-sided p) so the deltas reported in the round writeups
+are honest about per-document pairing.
+
+Other diagnostics produced from the same rows:
+
+- `controller_diagnostics`     : decision counts (`stop_after_probe`,
+                                 `continue_solve`, `fallback_hard_cap`, ...)
+                                 and probe/solve/restart token shares.
+- `parse_fail_table` /
+  `parse_fail_reason_table`    : method × budget parse-fail matrices used
+                                 to check the fairness contract.
+- `build_failure_taxonomy`     : tags wrong rows as
+                                 parse_fail / budget_exhausted /
+                                 anchor_too_long / wrong_reasoning.
+
+`main()` writes a single analysis JSON next to the run, which both
+`report_spend_sweep.py` and the closure reports consume.
+
+Note: this module imports `process_question_metrics` from the sibling
+`hot-mess-of-ai/scripts` repo via `sys.path` insertion; that's the legacy
+metric implementation the project standardised on for the
+bias/variance/error identity check (`1 - soft_acc == bias + actual_variance`,
+tolerance `--identity-tol`).
+"""
+
 from __future__ import annotations
 
 import argparse
