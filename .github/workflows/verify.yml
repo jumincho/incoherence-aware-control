@@ -66,3 +66,25 @@ jobs:
             echo "::error::Potential secret detected in tracked source"
             exit 1
           fi
+
+  imports:
+    name: Import resolvability
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # torch is consumed from the system on the original GPU box (the venv uses
+      # --system-site-packages) and is not declared, so install a CPU build here.
+      - name: Install dependencies
+        run: |
+          python -m pip install -U pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
+
+      # 'utils' is the sibling hot-mess-of-ai metric module, loaded via sys.path.
+      - name: All top-level imports resolve
+        run: python tools/check_imports.py utils

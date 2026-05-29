@@ -96,6 +96,11 @@ pip install -U -r requirements.txt
 export HF_TOKEN=...   # 필요한 경우에만
 ```
 
+> **외부 의존성:** `src/analyze_hotmess_style.py` 의 헤드라인 지표
+> (`process_question_metrics`)는 형제 레포 `hot-mess-of-ai`
+> (`../hot-mess-of-ai/scripts/utils.py`)에서 `sys.path` 로 불러옵니다. 이 레포에는
+> 포함되어 있지 않으므로, 분석 단계를 재현하려면 같은 상위 폴더에 함께 두어야 합니다.
+
 ## 상태
 
 🧊 **휴면 중** — 능동 개발은 멈췄지만 살리려면 살릴 수 있는 상태입니다.
@@ -186,6 +191,11 @@ source .venv/bin/activate
 pip install -U -r requirements.txt
 export HF_TOKEN=...   # only if needed
 ```
+
+> **External dependency:** the headline metric in `src/analyze_hotmess_style.py`
+> (`process_question_metrics`) is imported via `sys.path` from a sibling repo,
+> `hot-mess-of-ai` (`../hot-mess-of-ai/scripts/utils.py`). It is not bundled here,
+> so reproducing the analysis step requires cloning it alongside this repo.
 
 ### Status
 
