@@ -1,5 +1,11 @@
 # Reproduction Guide (New Server)
 
+## 0) Sibling-Repo Prerequisite
+
+`src/analyze_hotmess_style.py` imports metric utilities from a sibling repository: clone
+`hot-mess-of-ai` into the **same parent directory** as `incoherence-aware-control` before
+running any analysis step (i.e. `../hot-mess-of-ai` must exist relative to this repo root).
+
 ## 1) Environment
 ```bash
 python3 -m venv --system-site-packages .venv

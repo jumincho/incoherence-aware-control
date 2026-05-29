@@ -75,6 +75,17 @@ def _extract_keyed_options(text: str) -> List[str]:
 
 
 def classify_parse_result(text: str) -> Tuple[Optional[str], Optional[str], Dict[str, object]]:
+    """Parse raw model output and classify it as a valid answer choice or a typed failure.
+
+    Accepts the full text of a model response and applies a precedence-ordered extraction
+    strategy: (1) a bare single-letter line, (2) an explicit "Final Answer: X" or
+    "Tentative Answer: X" marker, (3) keyed phrasings such as "answer", "pick", "choose",
+    or "therefore", (4) a unique parenthesised ``(X)`` anywhere in the text. Returns a
+    3-tuple of ``(option, fail_type, info)`` where ``option`` is a normalised string such
+    as ``"(A)"`` and ``fail_type`` is ``None`` on success or one of the ``PARSE_FAIL_*``
+    constants (``NO_ANSWER``, ``MULTI_ANSWER``, ``INVALID``) on failure. ``info`` is a
+    diagnostic dict recording the intermediate candidates found at each stage.
+    """
     raw_text = text or ""
     m_single = _SINGLE_OPTION_PATTERN.match(raw_text)
     if m_single:
@@ -127,6 +138,13 @@ def classify_parse_result(text: str) -> Tuple[Optional[str], Optional[str], Dict
 
 
 def extract_final_option(text: str) -> Optional[str]:
+    """Convenience wrapper around ``classify_parse_result`` that returns the option or None.
+
+    Calls ``classify_parse_result(text)`` and returns the normalised option string (e.g.
+    ``"(B)"``) when parsing succeeds, or ``None`` when any ``PARSE_FAIL_*`` condition is
+    triggered. Use this when callers only need the answer letter and do not need to
+    distinguish between failure modes.
+    """
     option, fail_type, _ = classify_parse_result(text)
     if fail_type is None:
         return option
@@ -134,6 +152,15 @@ def extract_final_option(text: str) -> Optional[str]:
 
 
 def extract_last_option_anywhere(text: str) -> Optional[str]:
+    """Return the last answer letter mentioned anywhere in the text, with no parsing policy applied.
+
+    Scans for any parenthesised ``(X)`` or bare letter ``X`` (A-D, case-insensitive) and
+    returns the final match as a normalised option string. This is a fallback heuristic
+    used for diagnostics or repair passes; it deliberately ignores the precedence rules in
+    ``classify_parse_result`` and can return a letter that appears only in the question
+    stem rather than the answer declaration. Returns ``None`` if no letter is found or if
+    ``text`` is empty.
+    """
     if not text:
         return None
     last = None
@@ -145,6 +172,14 @@ def extract_last_option_anywhere(text: str) -> Optional[str]:
 
 
 def extract_confidence(text: str) -> Optional[float]:
+    """Extract a numeric confidence score from model output if the model declared one.
+
+    Searches for a ``Confidence: <value>`` or ``Confidence = <value>`` pattern
+    (case-insensitive) and returns the parsed float clamped to ``[0.0, 1.0]``. Returns
+    ``None`` if no confidence declaration is found or if ``text`` is empty. The confidence
+    value is used by the controller to decide whether to continue sampling; it is not
+    required for plain accuracy measurement.
+    """
     if not text:
         return None
     m = _CONF_PATTERN.search(text)
