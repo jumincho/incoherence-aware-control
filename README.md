@@ -16,6 +16,12 @@
 
 > 🧊 **휴면(dormant) 중인 연구 파일럿입니다.**
 
+## ⭐ 핵심 결과 (TL;DR)
+
+- **불안정성(incoherence) 신호로 test-time compute를 배분하면 효과가 있었습니다** — 충분히 큰 예산에서 균등 배분 baseline보다 정확도·안정성이 모두 개선.
+- 단 **효과는 예산에 의존**했습니다 — 작은 예산에선 안정성은 올라도 정확도는 떨어질 수 있었습니다("항상"이 아니라 "조건부").
+- **가장 강한 단순 baseline(여러 번 풀어 다수결)을 깔끔히 이기진 못했습니다** — 컨트롤러 고유의 이득을 분리하지 못했습니다.
+
 ## 무엇을 보려던 연구였나
 
 객관식 추론 문제(예: GPQA, MMLU)에서 모델에게 같은 양의 "생각할 시간(test-time compute)" 을 줄 때, 좀 더 똑똑하게 그 시간을 배분하는 컨트롤러를 만들 수 있을까 — 라는 질문에서 출발한 연구입니다.
@@ -100,6 +106,12 @@ export HF_TOKEN=...   # 필요한 경우에만
 ## English
 
 > 🧊 **Dormant research pilot.**
+
+### ⭐ Key result (TL;DR)
+
+- Steering test-time compute by **incoherence works** — at large enough budgets it beat uniform allocation on both accuracy and stability.
+- But the **win is budget-dependent** — at small budgets stability rose while accuracy could fall ("conditional," not "always").
+- It **did not cleanly beat the strongest simple baseline** (repeat-and-vote); the controller's unique gain wasn't isolated.
 
 ### What this set out to test
 
