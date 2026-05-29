@@ -60,6 +60,17 @@ from typing import Dict, List, Tuple
 import numpy as np
 import yaml
 
+# External dependency: this project imports metric utilities from the sibling
+# repository `hot-mess-of-ai`, which must be cloned at the same directory level
+# as `incoherence-aware-control` — i.e. as `../hot-mess-of-ai` relative to this
+# repo root.  The expected on-disk layout is:
+#
+#   <workspace>/
+#       incoherence-aware-control/   ← this repo
+#       hot-mess-of-ai/              ← must be cloned alongside
+#           scripts/
+#               utils.py             ← provides process_question_metrics
+#
 HOT_MESS_UTILS = Path(__file__).resolve().parents[2] / "hot-mess-of-ai" / "scripts"
 if str(HOT_MESS_UTILS) not in sys.path:
     sys.path.insert(0, str(HOT_MESS_UTILS))
@@ -111,6 +122,15 @@ def paired_bootstrap_delta(
     iters: int = 2000,
     seed: int = 1234,
 ) -> Dict[str, float]:
+    """Compute a paired bootstrap confidence interval and two-sided p-value for the mean delta.
+
+    Both inputs are dicts mapping doc_id to a scalar metric value (e.g. per-document
+    incoherence or accuracy). Only doc_ids present in both dicts are included. Bootstrap
+    resampling is done over the paired differences (other - base) for ``iters`` draws.
+    Returns a dict with keys ``n`` (number of paired documents), ``delta_mean`` (mean of
+    ``other - base``), ``ci_low`` and ``ci_high`` (2.5th/97.5th percentiles of the
+    bootstrap distribution), and ``p_two_sided`` (two-sided p-value; NaN when n=0).
+    """
     docs = sorted(set(base_doc_metric.keys()) & set(other_doc_metric.keys()))
     if not docs:
         return {"n": 0, "delta_mean": math.nan, "ci_low": math.nan, "ci_high": math.nan, "p_two_sided": math.nan}
@@ -144,6 +164,21 @@ def compute_budget_stats(
     identity_dump_path: Path,
     drop_parse_fail: bool = False,
 ) -> Dict[str, Dict[str, object]]:
+    """Aggregate per-question bias/variance/incoherence statistics for one budget cell.
+
+    Filters ``rows`` to those matching ``budget``, then groups them by method and doc_id.
+    For each (method, doc_id) group it delegates to ``process_question_metrics`` (from
+    ``hot-mess-of-ai``) to obtain bias, variance, and accuracy values, and additionally
+    computes ``incoherence`` as ``sum_variance / (sum_bias + sum_variance)`` across
+    questions. If the bias+variance identity check ``|(1-soft_acc) - bias - variance| >
+    identity_tol`` fails for any document, that document's details are appended to
+    ``identity_dump_path`` as a JSONL record. When ``drop_parse_fail=True``, trials with
+    a non-null ``parse_fail_type`` are excluded from metric computation. Returns a dict
+    keyed by method name, each value containing scalar aggregates (``incoherence``,
+    ``accuracy``, ``mean_bias``, ``mean_variance``, token averages, parse-fail counts)
+    plus per-document dicts (``doc_incoh``, ``doc_acc``, ``doc_bias``, ``doc_var``,
+    ``doc_inter``) used downstream by ``paired_bootstrap_delta``.
+    """
     grouped: Dict[str, Dict[str, List[Dict[str, object]]]] = defaultdict(lambda: defaultdict(list))
     for r in rows:
         if int(r.get("budget_total", -1)) != int(budget):
@@ -284,6 +319,19 @@ def compute_budget_stats(
 
 
 def controller_diagnostics(rows: List[Dict[str, object]], budget: int, method: str) -> Dict[str, object]:
+    """Summarise controller decision behaviour for one (budget, method) cell.
+
+    Filters ``rows`` to those matching the given ``budget`` and ``method`` name, then
+    reads the ``controller_trace.decision`` field on each trial (e.g. ``stop_after_probe``,
+    ``continue_solve``, ``fallback_hard_cap``) and the per-stage token counts from
+    ``stage_token_spend``. Returns a dict containing: ``n`` (number of matched trials),
+    ``decision_counts`` and ``decision_rates`` (raw counts and fractions per decision
+    label), ``fallback_rate`` and ``stop_after_probe_rate`` (convenience fractions), and
+    average token counts broken down by stage (``avg_probe_tokens``, ``avg_solve_tokens``,
+    ``avg_restart_tokens``, ``avg_total_tokens``) plus ``probe_token_share`` and
+    ``solve_token_share`` as fractions of total tokens spent. Returns an empty dict if no
+    matching rows are found.
+    """
     tgt = [r for r in rows if int(r.get("budget_total", -1)) == int(budget) and str(r.get("method")) == method]
     if not tgt:
         return {}
